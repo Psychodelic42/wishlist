@@ -28,4 +28,4 @@ This is a Flask-based web application for managing a wishlist. The application a
    
 3. docker run or start image in portainer/whatever you are using
 
-4. enjoy the application on http://<IP OR HOSTNAME>:44555/
+4. enjoy the application on http://[IP OR HOSTNAME]:44555/
