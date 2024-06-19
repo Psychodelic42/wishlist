@@ -7,7 +7,7 @@ This is a Flask-based web application for managing a wishlist. The application a
 - Add new items to the wishlist
 - View the wishlist
 - Remove items from the wishlist
-- View the history of removed items
+- View the history of removed items (visible in the .db)
 
 ## Requirements
 
