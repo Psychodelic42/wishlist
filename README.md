@@ -24,6 +24,8 @@ This is a Flask-based web application for managing a wishlist. The application a
 
 2. run docker build process
    ```bash
-   sudo docker build -t wishlist .```
+   sudo docker build -t wishlist .
+   
 3. docker run or start image in portainer/whatever you are using
+
 4. enjoy!
