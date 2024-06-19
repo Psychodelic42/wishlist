@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wunschliste</title>
+    <link rel="stylesheet" href="../static/styles_index.css">
+    <link rel="icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Wunschliste</div>
+        <nav>
+            <ul>
+                <li><a href="wishlist.html">Wunschliste anzeigen</a></li>
+                <li><a href="index.html">Neuen Eintrag hinzufügen</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="categories" id="categories">
+            <div class="category" id="film">
+                <div class="icon">🎬</div>
+                <div class="label">Film</div>
+            </div>
+            <div class="category" id="serie">
+                <div class="icon">📺</div>
+                <div class="label">Serie</div>
+            </div>
+            <div class="category" id="hoerbuch">
+                <div class="icon">🎧</div>
+                <div class="label">Hörbuch</div>
+            </div>
+            <div class="category" id="ebook">
+                <div class="icon">📚</div>
+                <div class="label">E-Book</div>
+            </div>
+        </div>
+        <div id="overlay" class="overlay">
+            <div class="overlay-content">
+                <div id="category-options"></div>
+            </div>
+        </div>
+        <div id="form-container" class="form-container">
+            <form id="entry-form">
+                <label for="title">Titel:</label>
+                <input type="text" id="title" name="title" required>
+                <label for="year">Erscheinungsjahr:</label>
+                <input type="text" id="year" name="year" required>
+                <label for="link">Link (optional):</label>
+                <input type="url" id="link" name="link">
+                <button type="submit">Speichern</button>
+                <button type="button" id="cancel">Abbrechen</button>
+            </form>
+        </div>
+    </main>
+    <script src="../static/script.js"></script>
+</body>
+</html>

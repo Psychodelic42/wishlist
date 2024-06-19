@@ -1,0 +1,140 @@
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background-color: #121212;
+    color: #E0E0E0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1F1F1F;
+    color: #E0E0E0;
+    padding: 10px 20px;
+}
+
+header .logo {
+    font-size: 1.5em;
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #E0E0E0;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px; /* Abstand zwischen den Kästchen */
+    width: 100%;
+    max-width: 800px;
+}
+
+.category {
+    background-color: #292929;
+    color: #E0E0E0;
+    width: 20%;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.category .icon {
+    font-size: 2em;
+}
+
+.category:hover {
+    background-color: #3D3D3D;
+}
+
+.overlay, .form-container, .wishlist-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-content, .form-container form {
+    background-color: #1F1F1F;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: #E0E0E0;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container form label {
+    margin: 10px 0 5px;
+}
+
+.form-container form input {
+    padding: 5px;
+    margin-bottom: 10px;
+    background-color: #292929;
+    border: 1px solid #3D3D3D;
+    color: #E0E0E0;
+}
+
+.form-container form button {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container form button:hover {
+    background-color: #0056b3;
+}
+
+.option-btn {
+    padding: 10px;
+    margin: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.option-btn:hover {
+    background-color: #0056b3;
+}
