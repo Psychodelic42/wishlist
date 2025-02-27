@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wunschliste - Login</title>
+    <link rel="stylesheet" href="../static/styles_login.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Wunschliste</div>
+        <nav>
+            <ul>
+                {% if logged_in %}
+                    <li><a href="/logout">Abmelden</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% if not logged_in %}
+        <section id="login">
+            <div class="login-container">
+                <h1>Login</h1>
+                <form method="POST" action="/login">
+                    <div class="form-group">
+                        <label for="username">Benutzername:</label>
+                        <input type="text" id="username" name="username" placeholder="Benutzername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Passwort:</label>
+                        <input type="password" id="password" name="password" placeholder="Passwort" required>
+                    </div>
+                    <button type="submit">Anmelden</button>
+                    {% if error %}
+                    <p class="error">{{ error }}</p>
+                    {% endif %}
+                </form>
+            </div>
+        </section>
+        {% else %}
+        <section id="content">
+            <h1>Willkommen bei der Wunschliste!</h1>
+            <p>Hier kannst du deine Wunschliste verwalten.</p>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

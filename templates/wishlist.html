@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wunschliste</title>
     <link rel="stylesheet" href="../static/styles_wishlist.css">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -18,7 +18,7 @@
             </ul>
         </nav>
     </header>
-    <main>
+    <main> 
         <div id="wishlist-container" class="wishlist-container">
             <h2>Wunschliste</h2>
             <ul id="wishlist"></ul>
