@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     const wishlist = document.getElementById('wishlist');
 
-    fetch('http://localhost:5000/get_wishlist')
+    fetch('/get_wishlist')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Netzwerkantwort war nicht ok');
@@ -19,9 +19,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 data.forEach(entry => {
                     const li = document.createElement('li');
                     li.innerHTML = `
-                        <span>${entry.title} (${entry.year})</span>
+                        <span><strong>${entry.title}</strong> (${entry.year})</span>
                         <span>${entry.category}</span>
-                        <button onclick="removeFromWishlist(${entry.id}, this)">🗑</button>
+                        <span>Hinzugefügt von: ${entry.username}</span>
+                        <button data-id="${entry.id}">🗑</button>
                     `;
                     wishlist.appendChild(li);
                 });
@@ -31,8 +32,18 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Es gab ein Problem mit der Fetch-Operation:', error);
         });
 
-    window.removeFromWishlist = function(id, button) {
-        fetch(`http://localhost:5000/remove_entry/${id}`, {
+
+    // Event Delegation für dynamische Buttons
+    wishlist.addEventListener('click', function(event) {
+        if (event.target.tagName === 'BUTTON') {
+            const id = event.target.getAttribute('data-id');
+            removeFromWishlist(id, event.target);
+        }
+    });
+
+    function removeFromWishlist(id, button) {
+        console.log(`Removing entry with ID: ${id}`);
+        fetch(`/remove_entry/${id}`, {
             method: 'DELETE',
         })
         .then(response => {
@@ -54,4 +65,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-

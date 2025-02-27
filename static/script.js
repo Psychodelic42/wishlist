@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", function() {
         switch (category) {
             case 'film':
                 options = `
-                    <button class="option-btn" onclick="selectOption('Anime')">Anime</button>
-                    <button class="option-btn" onclick="selectOption('Nicht-Anime')">Nicht-Anime</button>
+                    <button class="option-btn" data-option="Anime">Anime</button>
+                    <button class="option-btn" data-option="Nicht-Anime">Nicht-Anime</button>
                 `;
                 break;
             case 'serie':
                 options = `
-                    <button class="option-btn" onclick="selectOption('Anime-Serie')">Anime-Serie</button>
-                    <button class="option-btn" onclick="selectOption('Nicht-Anime-Serie')">Nicht-Anime-Serie</button>
+                    <button class="option-btn" data-option="Anime-Serie">Anime-Serie</button>
+                    <button class="option-btn" data-option="Nicht-Anime-Serie">Nicht-Anime-Serie</button>
                 `;
                 break;
             case 'hoerbuch':
@@ -36,20 +36,29 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             case 'ebook':
                 options = `
-                    <button class="option-btn" onclick="selectOption('Literatur/Fachbuch')">Literatur/Fachbuch</button>
-                    <button class="option-btn" onclick="selectOption('Comic')">Comic</button>
-                    <button class="option-btn" onclick="selectOption('Manga')">Manga</button>
-                    <button class="option-btn" onclick="selectOption('Roman')">Roman</button>
-                    <button class="option-btn" onclick="selectOption('Sonstiges')">Sonstiges</button>
+                    <button class="option-btn" data-option="Literatur/Fachbuch">Literatur/Fachbuch</button>
+                    <button class="option-btn" data-option="Comic">Comic</button>
+                    <button class="option-btn" data-option="Manga">Manga</button>
+                    <button class="option-btn" data-option="Roman">Roman</button>
+                    <button class="option-btn" data-option="Sonstiges">Sonstiges</button>
                 `;
                 break;
         }
         categoryOptions.innerHTML = options;
     }
 
-    window.selectOption = function(option) {
+    // Event Delegation für die Buttons
+    categoryOptions.addEventListener('click', function(event) {
+        if (event.target.classList.contains('option-btn')) {
+            const option = event.target.getAttribute('data-option');
+            selectOption(option);
+        }
+    });
+
+    function selectOption(option) {
         overlay.style.display = 'none';
         formContainer.style.display = 'flex';
+        selectedCategory = option; // Option speichern
     }
 
     entryForm.addEventListener('submit', function(event) {
@@ -68,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     function addToWishlist(entry) {
-        fetch('http://localhost:5000/add_entry', {  // Update to the correct URL
+        fetch('/add_entry', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
