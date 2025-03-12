@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wunschliste</title>
+        <link rel="stylesheet" href="../static/styles_history.css">
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    </head>
+<body>
+    <header>
+        <div class="logo">Wunschliste</div>
+        <nav>
+            <ul>
+                <li><a href="wishlist.html">Wunschliste anzeigen</a></li>
+                <li><a href="index.html">Neuen Eintrag hinzufügen</a></li>
+                <li><a href="history.html">History</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="history-container" class="wishlist-container">
+            <h2>History der Wunschliste</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Erscheinungsjahr</th>
+                        <th>Kategorie</th>
+                        <th>Bemerkung</th>
+                    </tr>
+                </thead>
+                <tbody id="history-list"></tbody>
+            </table>
+        </div>
+    </main>
+    <script src="../static/history.js"></script>
+</body>
+</html>

@@ -15,15 +15,40 @@
             <ul>
                 <li><a href="wishlist.html">Wunschliste anzeigen</a></li>
                 <li><a href="index.html">Neuen Eintrag hinzufügen</a></li>
+                <li><a href="history.html">History</a></li>
             </ul>
         </nav>
     </header>
     <main> 
         <div id="wishlist-container" class="wishlist-container">
             <h2>Wunschliste</h2>
-            <ul id="wishlist"></ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Erscheinungsjahr</th>
+                        <th>Kategorie</th>
+                        <th>Bemerkung</th>
+                        <th>Aktion</th>
+                    </tr>
+                </thead>
+                <tbody id="wishlist"></tbody>
+            </table>
         </div>
     </main>
+    
+    <!-- Modal für Bemerkung Bearbeitung -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Bemerkung bearbeiten</h2>
+            <textarea id="modalNotes"></textarea>
+            <div class="modal-buttons">
+                <button id="saveNotes">Speichern</button>
+                <button id="cancelNotes">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../static/wishlist.js"></script>
 </body>
 </html>
