@@ -43,6 +43,7 @@ main {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+    margin-top: 20px; /* Abstand zur Navbar hinzugefügt */
 }
 
 .wishlist-container {
@@ -56,7 +57,7 @@ main {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    margin-top: 20px;
+    margin-top: 20px; /* Abstand zur Navbar für die Box hinzugefügt */
 }
 
 .wishlist-container h2 {
@@ -71,7 +72,7 @@ main {
 
 .wishlist-container th, .wishlist-container td {
     border-bottom: 1px solid #3D3D3D;
-    padding: 10px;
+    padding: 15px;
     text-align: left;
 }
 
@@ -82,70 +83,4 @@ main {
 
 .wishlist-container td {
     background-color: #1F1F1F;
-}
-
-.edit-btn, .delete-btn {
-    margin-left: 8px;
-    background-color: #e20000;
-    color: white;
-    border: none;
-    border-radius: 3px;
-    padding: 3px 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 0.9em;
-}
-
-.edit-btn:hover, .delete-btn:hover {
-    background-color: #a50000;
-}
-
-/* Abstand zwischen den Buttons */
-.edit-btn + .delete-btn {
-    margin-left: 12px;
-}
-
-/* Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #1F1F1F;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    text-align: center;
-    width: 300px;
-    z-index: 1000;
-}
-
-.modal-content textarea {
-    width: 100%;
-    height: 80px;
-    background-color: #292929;
-    border: 1px solid #3D3D3D;
-    color: #E0E0E0;
-    padding: 5px;
-    resize: none;
-}
-
-.modal-buttons {
-    margin-top: 10px;
-}
-
-.modal-buttons button {
-    padding: 10px;
-    margin: 5px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.modal-buttons button:hover {
-    background-color: #0056b3;
 }

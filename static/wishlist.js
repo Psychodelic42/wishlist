@@ -1,67 +1,111 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const wishlist = document.getElementById('wishlist');
-
-    fetch('/get_wishlist')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Netzwerkantwort war nicht ok');
-            }
-            return response.json();
-        })
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/get_wishlist")
+        .then(response => response.json())
         .then(data => {
-            if (data.length === 0) {
-                const li = document.createElement('li');
-                li.textContent = 'Ganz schön leer hier...';
-                li.style.textAlign = 'center';
-                li.style.color = '#E0E0E0';
-                wishlist.appendChild(li);
-            } else {
-                data.forEach(entry => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <span><strong>${entry.title}</strong> (${entry.year})</span>
-                        <span>${entry.category}</span>
-                        <span>Hinzugefügt von: ${entry.username}</span>
-                        <button data-id="${entry.id}">🗑</button>
-                    `;
-                    wishlist.appendChild(li);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Es gab ein Problem mit der Fetch-Operation:', error);
-        });
+            const tableBody = document.getElementById("wishlist");
+            tableBody.innerHTML = "";
 
+            data.forEach(entry => {
+                const row = document.createElement("tr");
 
-    // Event Delegation für dynamische Buttons
-    wishlist.addEventListener('click', function(event) {
-        if (event.target.tagName === 'BUTTON') {
-            const id = event.target.getAttribute('data-id');
-            removeFromWishlist(id, event.target);
-        }
-    });
+                const titleCell = document.createElement("td");
+                titleCell.textContent = entry.title;
 
-    function removeFromWishlist(id, button) {
-        console.log(`Removing entry with ID: ${id}`);
-        fetch(`/remove_entry/${id}`, {
-            method: 'DELETE',
+                const yearCell = document.createElement("td");
+                yearCell.textContent = entry.year;
+
+                const categoryCell = document.createElement("td");
+                categoryCell.textContent = entry.category;
+
+                const notesCell = document.createElement("td");
+                notesCell.textContent = entry.notes || "";
+
+                const actionCell = document.createElement("td");
+                
+                const editButton = document.createElement("button");
+                editButton.textContent = "📝";
+                editButton.classList.add("edit-btn");
+                editButton.dataset.id = entry.id;
+                editButton.dataset.notes = entry.notes || "";
+                actionCell.appendChild(editButton);
+                
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "🗑️";
+                deleteBtn.classList.add("delete-btn");
+                deleteBtn.dataset.id = entry.id;
+                actionCell.appendChild(deleteBtn);
+
+                row.appendChild(titleCell);
+                row.appendChild(yearCell);
+                row.appendChild(categoryCell);
+                row.appendChild(notesCell);
+                row.appendChild(actionCell);
+
+                tableBody.appendChild(row);
+            });
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Netzwerkantwort war nicht ok');
-            }
-            const li = button.parentElement;
-            wishlist.removeChild(li);
-            if (wishlist.children.length === 0) {
-                const emptyLi = document.createElement('li');
-                emptyLi.textContent = 'Ganz schön leer hier...';
-                emptyLi.style.textAlign = 'center';
-                emptyLi.style.color = '#E0E0E0';
-                wishlist.appendChild(emptyLi);
-            }
-        })
-        .catch(error => {
-            console.error('Es gab ein Problem mit der Fetch-Operation:', error);
-        });
+        .catch(error => console.error("Fehler beim Laden der Wunschliste:", error));
+});
+
+// Event Delegation für das Editieren von Bemerkungen
+document.getElementById("wishlist").addEventListener("click", function (event) {
+    if (event.target.classList.contains("edit-btn")) {
+        const entryId = event.target.dataset.id;
+        const currentNotes = event.target.dataset.notes;
+        openEditModal(entryId, currentNotes);
+    }
+    if (event.target.classList.contains("delete-btn")) {
+        const entryId = event.target.dataset.id;
+        removeFromWishlist(entryId, event.target);
     }
 });
+
+function openEditModal(entryId, currentNotes) {
+    const modal = document.getElementById("editModal");
+    const modalInput = document.getElementById("modalNotes");
+    const saveButton = document.getElementById("saveNotes");
+
+    modal.style.display = "flex";
+    modalInput.value = currentNotes;
+    
+    saveButton.onclick = function () {
+        const newNotes = modalInput.value;
+        fetch("/update_notes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id: entryId, notes: newNotes })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                console.error("Fehler beim Speichern der Bemerkung");
+            }
+        })
+        .catch(error => console.error("Netzwerkfehler:", error));
+    };
+}
+
+// Modal schließen
+document.getElementById("cancelNotes").addEventListener("click", function () {
+    document.getElementById("editModal").style.display = "none";
+});
+
+// Funktion zum Entfernen eines Eintrags aus der Wunschliste
+function removeFromWishlist(id, button) {
+    console.log(`Removing entry with ID: ${id}`);
+    fetch(`/remove_entry/${id}`, {
+        method: "DELETE",
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Netzwerkantwort war nicht ok");
+        }
+        const row = button.closest("tr");
+        row.remove(); // Entferne die gesamte Tabellenzeile
+    })
+    .catch(error => {
+        console.error("Es gab ein Problem mit der Fetch-Operation:", error);
+    });
+}
