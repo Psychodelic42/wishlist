@@ -206,6 +206,56 @@ def remove_entry(id):
 
     return '', 204
 
+# Notes
+# Route, um Bemerkungen in der Wunschliste zu aktualisieren
+@app.route('/update_notes', methods=['POST'])
+def update_notes():
+    if 'user' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    data = request.json
+    entry_id = data.get('id')
+    notes = data.get('notes', '')
+
+    if not entry_id:
+        return jsonify({'error': 'Invalid data'}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Füge ein print() hinzu, um zu überprüfen, ob die Werte korrekt sind
+    print(f"Aktualisiere Bemerkung für ID {entry_id}: {notes}")
+
+    cursor.execute("UPDATE wishlist SET notes = ? WHERE id = ?", (notes, entry_id))
+    conn.commit() 
+    conn.close()
+
+    return jsonify({'success': True})
+
+
+# History
+
+# Route zum Rendern der Verlaufsseite
+@app.route('/history.html')
+def serve_history():
+    if 'user' not in session:
+        return redirect(url_for('login_page'))
+    return render_template('history.html')
+
+
+# Route, um die letzten 50 Einträge aus wishlist_history abzurufen
+@app.route('/get_history', methods=['GET'])
+def get_history():
+    if 'user' not in session:
+        return jsonify({'error': 'Unauthorized'}), 401
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, title, year, category, notes FROM wishlist_history ORDER BY id DESC LIMIT 50")
+    history_entries = cursor.fetchall()
+    conn.close()
+    
+    return jsonify([dict(entry) for entry in history_entries])
 
 @app.route('/favicon.ico')
 def favicon():
